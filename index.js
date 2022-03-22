@@ -1,28 +1,18 @@
-import http from 'http';
+import express from 'express';
+import { userRouter } from './users/users.js'
 
-const host = '127.0.0.1';
 const port = 8000;
+const app = express();
 
-const server = http.createServer((req, res) => {
-	switch (req.method) { 
-		case 'GET':
-			switch (req.url) { 
-				case '/hello':
-					res.statusCode = 200;
-					res.setHeader('Content-Type', 'text/plain');
-					res.end(' /  h3ll0 ');
-					break;
-				case '/what':
-					res.statusCode = 200;
-					res.setHeader('Content-Type', 'text/plain');
-					res.end(' /  whater ');
-					break;
-			}
-			break;
-	}
-});
-
-server.listen(port, host, () => { 
-	console.log(`Server work: ${host}:${port}`)
+app.get('/hello', (req, res) => {
+	res.status(404).end()
 })
+
+app.use('/users', userRouter)
+
+app.listen(port, () => { 
+	console.log(`Server work: http://localhost:${port}`)
+})
+
+
 
